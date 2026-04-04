@@ -34,7 +34,6 @@ export default function Page() {
   const [search, setSearch] = useState("");
   const [dialog, setDialog] = useState<DialogState>(INITIAL_DIALOG_STATE);
   const [theme, setTheme] = useState<Theme>("dark");
-  const [hasHydratedTheme, setHasHydratedTheme] = useState(false);
 
   useEffect(() => {
     setProducts(loadProductsFromStorage());
@@ -50,22 +49,9 @@ export default function Page() {
   }, [products, hasHydratedProducts]);
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setTheme(savedTheme);
-    }
-
-    setHasHydratedTheme(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hasHydratedTheme) {
-      return;
-    }
-
     document.documentElement.classList.toggle("dark", theme === "dark");
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme, hasHydratedTheme]);
+  }, [theme]);
 
   const filteredProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
