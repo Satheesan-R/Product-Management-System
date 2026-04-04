@@ -142,7 +142,7 @@
   background: #f8fafc;
 }
 
-:global(.dark) .editButton {
+:global(.dgit rk) .editButton {
   border-color: #475569;
   background: #0D99FF;
   color: #f8fafc;
