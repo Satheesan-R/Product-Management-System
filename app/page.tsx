@@ -9,6 +9,7 @@ import {
   saveProductsToStorage,
   type Product,
 } from "@/app/lib/product";
+import styles from "./page.module.css";
 
 type DialogState = {
   open: boolean;
@@ -152,104 +153,100 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050816] px-4 py-6 text-slate-100 transition-colors sm:px-6 lg:px-8">
+    <main className={styles.page}>
       <Toaster richColors position="top-right" />
 
-      <section className="mx-auto grid w-full max-w-7xl gap-6 xl:grid-cols-[minmax(0,1fr)_440px]">
-        <div className="space-y-6">
-          <header className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#0d1324] via-[#11182d] to-[#1b2140] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:p-8">
-            <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_top_right,rgba(167,139,250,0.28),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.2),transparent_30%)]" />
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <p className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-indigo-200">
-                  Operational status: optimal
-                </p>
-                <h1 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl">
-                  Product Command
-                  <span className="block text-indigo-200">Center</span>
+      <section className={styles.shell}>
+        <div className={styles.stack}>
+          <header className={styles.hero}>
+            <div className={styles.heroContent}>
+              <div className={styles.heroText}>
+                <p className={styles.eyebrow}>Operational status: optimal</p>
+                <h1 className={styles.title}>
+                  Product <span className={styles.titleAccent}>Center</span>
                 </h1>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                <p className={styles.lead}>
                   Unified product orchestration for the assessment. Real-time tracking,
                   inventory intelligence, and local-first product management in one view.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className={styles.actions}>
                   <button
                     type="button"
                     onClick={openCreateDialog}
-                    className="rounded-full bg-indigo-200 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-indigo-100"
+                    className={styles.buttonPrimary}
                   >
                     + Add New Product
                   </button>
                   <button
                     type="button"
                     onClick={toggleTheme}
-                    className="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                    className={styles.buttonSecondary}
                   >
                     {theme === "dark" ? "Light" : "Dark"} Mode
                   </button>
                 </div>
               </div>
 
-              <div className="grid min-w-0 gap-3 sm:grid-cols-3 lg:w-[420px] lg:grid-cols-3">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <div className={styles.statsGrid}>
+                <div className={styles.statCard}>
+                  <p className={styles.statLabel}>
                     Total Products
                   </p>
-                  <p className="mt-3 text-3xl font-black text-white">{products.length}</p>
-                  <p className="mt-2 text-xs text-slate-400">Local inventory entries</p>
+                  <p className={styles.statValue}>{products.length}</p>
+                  <p className={styles.statNote}>Local inventory entries</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                <div className={styles.statCard}>
+                  <p className={styles.statLabel}>
                     Value
                   </p>
-                  <p className="mt-3 text-3xl font-black text-white">
+                  <p className={styles.statValue}>
                     {totalValue.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                       maximumFractionDigits: 0,
                     })}
                   </p>
-                  <p className="mt-2 text-xs text-slate-400">Current catalog worth</p>
+                  <p className={styles.statNote}>Current catalog worth</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                <div className={styles.statCard}>
+                  <p className={styles.statLabel}>
                     Search
                   </p>
-                  <p className="mt-3 text-3xl font-black text-white">{filteredProducts.length}</p>
-                  <p className="mt-2 text-xs text-slate-400">Filtered results</p>
+                  <p className={styles.statValue}>{filteredProducts.length}</p>
+                  <p className={styles.statNote}>Filtered results</p>
                 </div>
               </div>
             </div>
           </header>
 
-          <div className="rounded-[28px] border border-white/10 bg-[#0b1020] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.3)] sm:p-6">
-            <div className="mb-4 flex items-center justify-between gap-4">
+          <div className={styles.panel}>
+            <div className={styles.panelHeader}>
               <div>
-                <h2 className="text-xl font-semibold text-white">Latest Products</h2>
-                <p className="mt-1 text-sm text-slate-400">
+                <h2 className={styles.panelTitle}>Latest Products</h2>
+                <p className={styles.panelDescription}>
                   Curated additions to the product registry.
                 </p>
               </div>
-              <div className="w-full max-w-xs">
+              <div className={styles.searchWrap}>
                 <input
                   id="search"
                   type="search"
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
-                  className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-indigo-300/50 focus:ring-2 focus:ring-indigo-300/20"
+                  className={styles.searchInput}
                   placeholder="Search by name or description"
                 />
               </div>
             </div>
 
             {filteredProducts.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-white/10 bg-white/5 p-10 text-center text-sm text-slate-300">
+              <div className={styles.emptyState}>
                 {products.length === 0
                   ? "No products yet. Add your first product to get started."
                   : "No products match your search."}
               </div>
             ) : (
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              <div className={styles.productGrid}>
                 {filteredProducts.map((product) => (
                   <ProductCard
                     key={product.id}
@@ -262,12 +259,6 @@ export default function Page() {
             )}
           </div>
         </div>
-
-        <div className="hidden xl:block">
-          
-                       
-          </div>
-        
       </section>
 
       {dialog.open ? (
