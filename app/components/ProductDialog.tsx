@@ -120,12 +120,19 @@ export default function ProductDialog({
 
 	return (
 		<div
-			className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-8"
+			className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
 			role="dialog"
 			aria-modal="true"
 			aria-label={title}
 		>
-			<div className="w-full max-w-xl rounded-[28px] border border-slate-700/70 bg-[#111827] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.55)]">
+			<button
+				type="button"
+				className="absolute inset-0 h-full w-full cursor-default"
+				onClick={onClose}
+				aria-label="Close backdrop"
+			/>
+
+			<div className="absolute right-0 top-0 flex h-full w-full max-w-[520px] flex-col overflow-y-auto border-l border-slate-700/70 bg-[#111827] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:w-[520px] sm:rounded-l-[28px]">
 				<div className="mb-6 flex items-start justify-between gap-4">
 					<div>
 						<p className="text-xs font-black uppercase tracking-[0.3em] text-indigo-300">
@@ -260,6 +267,10 @@ export default function ProductDialog({
 								<img src={imagePreview} alt="Preview" className="h-48 w-full object-cover" />
 							</div>
 						) : null}
+						<p className="mt-3 text-xs leading-5 text-slate-500">
+							Tip: uploaded images are stored as a preview URL in local state. For the
+							assessment, the image URL field is what persists.
+						</p>
 					</div>
 
 					<div className="flex items-center justify-end gap-3 pt-2">
