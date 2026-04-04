@@ -6,6 +6,7 @@ import {
 	type Product,
 	type ProductFormInput,
 } from "@/app/lib/product";
+import styles from "./ProductDialog.module.css";
 
 type ProductDialogProps = {
 	open: boolean;
@@ -120,42 +121,42 @@ export default function ProductDialog({
 
 	return (
 		<div
-			className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+			className={styles.overlay}
 			role="dialog"
 			aria-modal="true"
 			aria-label={title}
 		>
 			<button
 				type="button"
-				className="absolute inset-0 h-full w-full cursor-default"
+				className={styles.backdrop}
 				onClick={onClose}
 				aria-label="Close backdrop"
 			/>
 
-			<div className="absolute right-0 top-0 flex h-full w-full max-w-[520px] flex-col overflow-y-auto border-l border-slate-700/70 bg-[#111827] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:w-[520px] sm:rounded-l-[28px]">
-				<div className="mb-6 flex items-start justify-between gap-4">
+			<div className={styles.dialog}>
+				<div className={styles.header}>
 					<div>
-						<p className="text-xs font-black uppercase tracking-[0.3em] text-indigo-300">
+						<p className={styles.eyebrow}>
 							Product Form
 						</p>
-						<h2 className="mt-2 text-2xl font-semibold text-slate-50">{title}</h2>
-						<p className="mt-2 text-sm text-slate-400">
+						<h2 className={styles.title}>{title}</h2>
+						<p className={styles.subtitle}>
 							Match the reference layout with a clean dark presentation.
 						</p>
 					</div>
 					<button
 						type="button"
 						onClick={onClose}
-						className="rounded-full p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"
+						className={styles.closeButton}
 						aria-label="Close dialog"
 					>
 						X
 					</button>
 				</div>
 
-				<form onSubmit={handleSubmit} className="space-y-6">
+				<form onSubmit={handleSubmit} className={styles.form}>
 					<div>
-						<label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-indigo-300" htmlFor="name">
+						<label className={styles.fieldLabel} htmlFor="name">
 							Product Name
 						</label>
 						<input
@@ -163,17 +164,17 @@ export default function ProductDialog({
 							type="text"
 							value={form.name}
 							onChange={(event) => updateField("name", event.target.value)}
-							className="w-full rounded-lg border border-slate-700 bg-[#343d57] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20"
+							className={styles.textInput}
 							placeholder="e.g. Quantum Pro Processor"
 						/>
 						{errors.name ? (
-							<p className="mt-1 text-xs text-rose-400">{errors.name}</p>
+							<p className={styles.errorText}>{errors.name}</p>
 						) : null}
 					</div>
 
-					<div className="grid gap-4 sm:grid-cols-2">
+					<div className={styles.gridTwo}>
 						<div>
-							<label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-indigo-300" htmlFor="price">
+							<label className={styles.fieldLabel} htmlFor="price">
 								Price (USD)
 							</label>
 							<input
@@ -183,31 +184,28 @@ export default function ProductDialog({
 								step="0.01"
 								value={form.price}
 								onChange={(event) => updateField("price", event.target.value)}
-								className="w-full rounded-lg border border-slate-700 bg-[#343d57] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20"
+								className={styles.textInput}
 								placeholder="0.00"
 							/>
 							{errors.price ? (
-								<p className="mt-1 text-xs text-rose-400">{errors.price}</p>
+								<p className={styles.errorText}>{errors.price}</p>
 							) : null}
 						</div>
 
 						<div>
-							<label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-indigo-300" htmlFor="category">
+							<label className={styles.fieldLabel} htmlFor="category">
 								Category
 							</label>
-							<div className="flex items-center rounded-lg border border-slate-700 bg-[#343d57] px-4 py-3 text-sm text-slate-200">
+							<div className={styles.staticField}>
 								<span className="flex-1">Electronics</span>
-								<span className="text-slate-400">⌄</span>
+								<span className={styles.staticFieldArrow}>⌄</span>
 							</div>
-							<p className="mt-1 text-xs text-slate-500">Category shown to match the reference layout.</p>
+							<p className={styles.staticFieldNote}>Category shown to match the reference layout.</p>
 						</div>
 					</div>
 
 					<div>
-						<label
-							className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-indigo-300"
-							htmlFor="description"
-						>
+						<label className={styles.fieldLabel} htmlFor="description">
 							Description
 						</label>
 						<textarea
@@ -215,16 +213,16 @@ export default function ProductDialog({
 							rows={4}
 							value={form.description}
 							onChange={(event) => updateField("description", event.target.value)}
-							className="w-full resize-none rounded-lg border border-slate-700 bg-[#343d57] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20"
+							className={styles.textArea}
 							placeholder="Describe the technical specifications and product intent..."
 						/>
 						{errors.description ? (
-							<p className="mt-1 text-xs text-rose-400">{errors.description}</p>
+							<p className={styles.errorText}>{errors.description}</p>
 						) : null}
 					</div>
 
 					<div>
-						<label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-indigo-300">
+						<label className={styles.fieldLabel}>
 							Product Imagery
 						</label>
 						<input
@@ -237,17 +235,17 @@ export default function ProductDialog({
 						<button
 							type="button"
 							onClick={openFilePicker}
-							className="flex w-full flex-col items-center justify-center rounded-2xl border border-dashed border-slate-500 bg-[#343d57] px-6 py-10 text-center text-slate-200 transition hover:border-indigo-400 hover:bg-[#3a4561]"
+							className={styles.uploadButton}
 						>
-							<div className="mb-4 text-4xl text-slate-300">☁</div>
-							<p className="text-base font-semibold">Drag and drop assets here</p>
-							<p className="mt-1 text-sm text-slate-400">PNG, JPG up to 10MB</p>
-							<span className="mt-4 text-sm font-semibold text-indigo-300 underline underline-offset-4">
+							<div className={styles.uploadIcon}>☁</div>
+							<p className={styles.uploadTitle}>Drag and drop assets here</p>
+							<p className={styles.uploadHint}>PNG, JPG up to 10MB</p>
+							<span className={styles.uploadLink}>
 								Browse files
 							</span>
 						</button>
-						<div className="mt-3">
-							<label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-indigo-300" htmlFor="imageUrl">
+						<div style={{ marginTop: 12 }}>
+							<label className={styles.fieldLabel} htmlFor="imageUrl">
 								Image URL (optional)
 							</label>
 							<input
@@ -255,35 +253,35 @@ export default function ProductDialog({
 								type="url"
 								value={form.imageUrl ?? ""}
 								onChange={(event) => updateField("imageUrl", event.target.value)}
-								className="w-full rounded-lg border border-slate-700 bg-[#343d57] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/20"
+								className={styles.textInput}
 								placeholder="https://example.com/product.jpg"
 							/>
 							{errors.imageUrl ? (
-								<p className="mt-1 text-xs text-rose-400">{errors.imageUrl}</p>
+								<p className={styles.errorText}>{errors.imageUrl}</p>
 							) : null}
 						</div>
 						{imagePreview ? (
-							<div className="mt-4 overflow-hidden rounded-2xl border border-slate-700 bg-[#1f2937]">
-								<img src={imagePreview} alt="Preview" className="h-48 w-full object-cover" />
+							<div className={styles.preview}>
+								<img src={imagePreview} alt="Preview" className={styles.previewImage} />
 							</div>
 						) : null}
-						<p className="mt-3 text-xs leading-5 text-slate-500">
+						<p className={styles.tip}>
 							Tip: uploaded images are stored as a preview URL in local state. For the
 							assessment, the image URL field is what persists.
 						</p>
 					</div>
 
-					<div className="flex items-center justify-end gap-3 pt-2">
+					<div className={styles.actions}>
 						<button
 							type="button"
 							onClick={onClose}
-							className="rounded-lg border border-slate-600 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-white/10"
+							className={styles.cancelButton}
 						>
 							Cancel
 						</button>
 						<button
 							type="submit"
-							className="rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-600"
+							className={styles.submitButton}
 						>
 							{mode === "create" ? "Add Product" : "Save Changes"}
 						</button>
