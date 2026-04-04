@@ -231,32 +231,57 @@
 .statCard {
   border: 1px solid var(--card-border);
   border-radius: 20px;
-  min-height: 150px;
-  padding: 22px;
+  min-height: 110px;
+  padding: 16px;
   background: var(--card-bg);
   backdrop-filter: blur(12px);
 }
 
+@media (max-width: 640px) {
+  .statCard {
+    min-height: 100px;
+    padding: 12px;
+  }
+}
+
 .statLabel {
   color: var(--stat-label);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.18em;
 }
 
+@media (max-width: 640px) {
+  .statLabel {
+    font-size: 9px;
+  }
+}
+
 .statValue {
-  margin-top: 12px;
+  margin-top: 8px;
   color: var(--text-main);
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 800;
   line-height: 1;
 }
 
+@media (max-width: 640px) {
+  .statValue {
+    font-size: 24px;
+  }
+}
+
 .statNote {
-  margin-top: 8px;
+  margin-top: 6px;
   color: var(--stat-label);
-  font-size: 12px;
+  font-size: 11px;
+}
+
+@media (max-width: 640px) {
+  .statNote {
+    font-size: 10px;
+  }
 }
 
 .panel {
@@ -323,12 +348,19 @@
 
 .productGrid {
   display: grid;
-  gap: 20px;
+  gap: 70px;
 }
 
 @media (min-width: 640px) {
   .productGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .productGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 1200px;
   }
 }
 

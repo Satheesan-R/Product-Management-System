@@ -154,7 +154,7 @@ export default function Page() {
 
   return (
     <main className={styles.page}>
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="top-center" />
 
       <section className={styles.shell}>
         <div className={styles.stack}>
