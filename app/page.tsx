@@ -35,7 +35,7 @@ export default function Page() {
   const [dialog, setDialog] = useState<DialogState>(INITIAL_DIALOG_STATE);
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") {
-      return "light";
+      return "dark";
     }
 
     const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -43,9 +43,7 @@ export default function Page() {
       return savedTheme;
     }
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    return "dark";
   });
 
   useEffect(() => {
@@ -163,7 +161,7 @@ export default function Page() {
               <div className={styles.heroText}>
                 <div className={styles.titleRow}>
                   <h1 className={styles.title}>
-                    Product <span className={styles.titleAccent}>Center</span>
+                    Product <span className={styles.titleAccent}>Management</span>
                   </h1>
                 </div>
                 <p className={styles.lead}>
