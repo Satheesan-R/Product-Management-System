@@ -23,13 +23,11 @@ const INITIAL_DIALOG_STATE: DialogState = {
 };
 
 export default function Page() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(() =>
+    typeof window === "undefined" ? [] : loadProductsFromStorage(),
+  );
   const [search, setSearch] = useState("");
   const [dialog, setDialog] = useState<DialogState>(INITIAL_DIALOG_STATE);
-
-  useEffect(() => {
-    setProducts(loadProductsFromStorage());
-  }, []);
 
   useEffect(() => {
     saveProductsToStorage(products);
@@ -184,13 +182,16 @@ export default function Page() {
         )}
       </section>
 
-      <ProductDialog
-        open={dialog.open}
-        mode={dialog.mode}
-        initialProduct={dialog.product}
-        onClose={closeDialog}
-        onSubmit={dialog.mode === "create" ? handleCreate : handleEdit}
-      />
+      {dialog.open ? (
+        <ProductDialog
+          key={`${dialog.mode}-${dialog.product?.id ?? "new"}`}
+          open={dialog.open}
+          mode={dialog.mode}
+          initialProduct={dialog.product}
+          onClose={closeDialog}
+          onSubmit={dialog.mode === "create" ? handleCreate : handleEdit}
+        />
+      ) : null}
     </main>
   );
 }
