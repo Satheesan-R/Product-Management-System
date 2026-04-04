@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import {
 	productSchema,
 	type Product,
@@ -26,6 +26,7 @@ const EMPTY_FORM: ProductFormInput = {
 	name: "",
 	price: "",
 	description: "",
+	imageUrl: "",
 
 };
 
@@ -36,33 +37,21 @@ export default function ProductDialog({
 	onClose,
 	onSubmit,
 }: ProductDialogProps) {
-	const [form, setForm] = useState<ProductFormInput>(EMPTY_FORM);
-	const [errors, setErrors] = useState<FormErrors>({});
-
-	useEffect(() => {
-		if (!open) {
-			return;
-		}
-
+	const [form, setForm] = useState<ProductFormInput>(() => {
 		if (mode === "edit" && initialProduct) {
-			setForm({
+			return {
 				name: initialProduct.name,
 				price: String(initialProduct.price),
 				description: initialProduct.description,
 				imageUrl: initialProduct.imageUrl ?? "",
-			});
-			setErrors({});
-			return;
+			};
 		}
 
-		setForm(EMPTY_FORM);
-		setErrors({});
-	}, [open, mode, initialProduct]);
+		return EMPTY_FORM;
+	});
+	const [errors, setErrors] = useState<FormErrors>({});
 
-	const title = useMemo(
-		() => (mode === "create" ? "Add Product" : "Edit Product"),
-		[mode],
-	);
+	const title = mode === "create" ? "Add Product" : "Edit Product";
 
 	if (!open) {
 		return null;
