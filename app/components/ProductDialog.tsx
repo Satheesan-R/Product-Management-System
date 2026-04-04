@@ -26,7 +26,7 @@ const EMPTY_FORM: ProductFormInput = {
 	name: "",
 	price: "",
 	description: "",
-	imageUrl: "",
+
 };
 
 export default function ProductDialog({
