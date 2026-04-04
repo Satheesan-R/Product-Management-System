@@ -228,29 +228,34 @@ export default function ProductForm({
 						) : null}
 					</div>
 
-					<div>
-						<label className={styles.fieldLabel}>
-							Product Imagery
-						</label>
-						<input
-							ref={fileInputRef}
-							type="file"
-							accept="image/png,image/jpeg,image/jpg"
-							className="sr-only"
-							onChange={handleFileSelect}
-						/>
-						<button
-							type="button"
-							onClick={openFilePicker}
-							className={styles.uploadButton}
-						>
-							<div className={styles.uploadIcon}>☁</div>
-							<p className={styles.uploadTitle}>Drag and drop assets here</p>
-							<p className={styles.uploadHint}>PNG, JPG up to 10MB</p>
-							<span className={styles.uploadLink}>
-								Browse files
-							</span>
-						</button>
+					<div className={styles.imageSection}>
+						<div className={styles.imageSectionHeader}>
+							<label className={styles.fieldLabel}>Product Imagery</label>
+							<p className={styles.staticFieldNote}>
+								Add an image below using drag and drop or browse files.
+							</p>
+						</div>
+
+						<div className={styles.imageUploadWrap}>
+							<input
+								ref={fileInputRef}
+								type="file"
+								accept="image/png,image/jpeg,image/jpg"
+								className={styles.srOnly}
+								onChange={handleFileSelect}
+							/>
+							<button
+								type="button"
+								onClick={openFilePicker}
+								className={styles.uploadButton}
+							>
+								<div className={styles.uploadIcon}>☁</div>
+								<p className={styles.uploadTitle}>Drag and drop assets here</p>
+								<p className={styles.uploadHint}>PNG, JPG up to 10MB</p>
+								<span className={styles.uploadLink}>Browse files</span>
+							</button>
+						</div>
+
 						<div className={styles.imageUrlWrap}>
 							<label className={styles.fieldLabel} htmlFor="imageUrl">
 								Image URL (optional)
@@ -267,12 +272,12 @@ export default function ProductForm({
 								<p className={styles.errorText}>{errors.imageUrl}</p>
 							) : null}
 						</div>
+
 						{imagePreview ? (
 							<div className={styles.preview}>
 								<img src={imagePreview} alt="Preview" className={styles.previewImage} />
 							</div>
 						) : null}
-						
 					</div>
 
 					<div className={styles.actions}>
