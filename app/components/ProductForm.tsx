@@ -282,17 +282,17 @@ export default function ProductForm({
 
 					<div className={styles.actions}>
 						<button
+							type="submit"
+							className={styles.submitButton}
+						>
+							{mode === "create" ? "Add Product" : "Save Changes"}
+						</button>
+						<button
 							type="button"
 							onClick={onClose}
 							className={styles.cancelButton}
 						>
 							Cancel
-						</button>
-						<button
-							type="submit"
-							className={styles.submitButton}
-						>
-							{mode === "create" ? "Add Product" : "Save Changes"}
 						</button>
 					</div>
 				</form>

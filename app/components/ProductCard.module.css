@@ -134,7 +134,7 @@
 
 .editButton {
   border: 1px solid #cbd5e1;
-  background:  #24A0ED;
+  background:  #0D99FF;
   color: #0f172a;
 }
 
@@ -144,12 +144,12 @@
 
 :global(.dark) .editButton {
   border-color: #475569;
-  background: #111827;
+  background: #0D99FF;
   color: #f8fafc;
 }
 
 :global(.dark) .editButton:hover {
-  background: #1f2937;
+  background: #2372e0;
 }
 
 .deleteButton {

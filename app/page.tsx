@@ -5,6 +5,7 @@ import { Toaster, toast } from "sonner";
 import ProductCard from "@/app/components/ProductCard";
 import ProductForm from "@/app/components/ProductForm";
 import {
+  getDefaultProducts,
   loadProductsFromStorage,
   saveProductsToStorage,
   type Product,
@@ -28,32 +29,43 @@ const INITIAL_DIALOG_STATE: DialogState = {
 const THEME_STORAGE_KEY = "product-management-theme";
 
 export default function Page() {
-  const [products, setProducts] = useState<Product[]>(() =>
-    typeof window === "undefined" ? [] : loadProductsFromStorage(),
-  );
+  const [products, setProducts] = useState<Product[]>(() => getDefaultProducts());
+  const [hasHydratedProducts, setHasHydratedProducts] = useState(false);
   const [search, setSearch] = useState("");
   const [dialog, setDialog] = useState<DialogState>(INITIAL_DIALOG_STATE);
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
-      return "dark";
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [hasHydratedTheme, setHasHydratedTheme] = useState(false);
+
+  useEffect(() => {
+    setProducts(loadProductsFromStorage());
+    setHasHydratedProducts(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasHydratedProducts) {
+      return;
     }
 
+    saveProductsToStorage(products);
+  }, [products, hasHydratedProducts]);
+
+  useEffect(() => {
     const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
     if (savedTheme === "dark" || savedTheme === "light") {
-      return savedTheme;
+      setTheme(savedTheme);
     }
 
-    return "dark";
-  });
+    setHasHydratedTheme(true);
+  }, []);
 
   useEffect(() => {
-    saveProductsToStorage(products);
-  }, [products]);
+    if (!hasHydratedTheme) {
+      return;
+    }
 
-  useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
+  }, [theme, hasHydratedTheme]);
 
   const filteredProducts = useMemo(() => {
     const query = search.trim().toLowerCase();

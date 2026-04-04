@@ -264,31 +264,32 @@
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 10px;
   margin-top: 10px;
 }
 
 .cancelButton {
-  padding: 8px 14px;
+  padding: 10px 20px;
   background: #e5e7eb;
   border: none;
-  border-radius: 6px;
+  border-radius: 13px;
   cursor: pointer;
 }
 
 /* 🌙 Dark cancel button */
 :global(.dark) .cancelButton {
   background: #374151;
-  color: #05080c;
+  color: white;
 }
 
 .submitButton {
-  padding: 8px 14px;
+  padding: 10px 20px;
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 13px;
   cursor: pointer;
 }
 
