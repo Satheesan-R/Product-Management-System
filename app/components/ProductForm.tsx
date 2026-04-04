@@ -6,9 +6,9 @@ import {
 	type Product,
 	type ProductFormInput,
 } from "@/app/lib/product";
-import styles from "./ProductDialog.module.css";
+import styles from "./ProductForm.module.css";
 
-type ProductDialogProps = {
+type ProductFormProps = {
 	open: boolean;
 	mode: "create" | "edit";
 	initialProduct?: Product | null;
@@ -31,13 +31,13 @@ const EMPTY_FORM: ProductFormInput = {
 
 };
 
-export default function ProductDialog({
+export default function ProductForm({
 	open,
 	mode,
 	initialProduct,
 	onClose,
 	onSubmit,
-}: ProductDialogProps) {
+}: ProductFormProps) {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const [form, setForm] = useState<ProductFormInput>(() => {
 		if (mode === "edit" && initialProduct) {
@@ -136,13 +136,8 @@ export default function ProductDialog({
 			<div className={styles.dialog}>
 				<div className={styles.header}>
 					<div>
-						<p className={styles.eyebrow}>
-							Product Form
-						</p>
 						<h2 className={styles.title}>{title}</h2>
-						<p className={styles.subtitle}>
-							Match the reference layout with a clean dark presentation.
-						</p>
+						
 					</div>
 					<button
 						type="button"
@@ -165,7 +160,7 @@ export default function ProductDialog({
 							value={form.name}
 							onChange={(event) => updateField("name", event.target.value)}
 							className={styles.textInput}
-							placeholder="e.g. Quantum Pro Processor"
+							placeholder="e.g. Cosmetics products "
 						/>
 						{errors.name ? (
 							<p className={styles.errorText}>{errors.name}</p>
@@ -175,13 +170,13 @@ export default function ProductDialog({
 					<div className={styles.gridTwo}>
 						<div>
 							<label className={styles.fieldLabel} htmlFor="price">
-								Price (USD)
+								Price (RS)
 							</label>
 							<input
 								id="price"
 								type="number"
 								min="0"
-								step="0.01"
+								step="1"
 								value={form.price}
 								onChange={(event) => updateField("price", event.target.value)}
 								className={styles.textInput}
@@ -207,6 +202,7 @@ export default function ProductDialog({
 								<option value="books">Books</option>
 								<option value="toys">Toys & Games</option>
 								<option value="grocery">Grocery</option>
+								<option value="other">Others</option>
 							</select>
 
 							<p className={styles.staticFieldNote}>
@@ -276,10 +272,7 @@ export default function ProductDialog({
 								<img src={imagePreview} alt="Preview" className={styles.previewImage} />
 							</div>
 						) : null}
-						<p className={styles.tip}>
-							Tip: uploaded images are stored as a preview URL in local state. For the
-							assessment, the image URL field is what persists.
-						</p>
+						
 					</div>
 
 					<div className={styles.actions}>

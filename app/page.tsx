@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Toaster, toast } from "sonner";
 import ProductCard from "@/app/components/ProductCard";
-import ProductDialog from "@/app/components/ProductDialog";
+import ProductForm from "@/app/components/ProductForm";
 import {
   loadProductsFromStorage,
   saveProductsToStorage,
@@ -183,9 +183,9 @@ export default function Page() {
                       Value
                     </p>
                     <p className={styles.statValue}>
-                      {totalValue.toLocaleString("en-US", {
+                      {totalValue.toLocaleString("en-LK", {
                         style: "currency",
-                        currency: "USD",
+                        currency: "LKR",
                         maximumFractionDigits: 0,
                       })}
                     </p>
@@ -263,7 +263,7 @@ export default function Page() {
       </section>
 
       {dialog.open ? (
-        <ProductDialog
+        <ProductForm
           key={`${dialog.mode}-${dialog.product?.id ?? "new"}`}
           open={dialog.open}
           mode={dialog.mode}
