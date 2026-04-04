@@ -196,11 +196,22 @@ export default function ProductDialog({
 							<label className={styles.fieldLabel} htmlFor="category">
 								Category
 							</label>
-							<div className={styles.staticField}>
-								<span className="flex-1">Electronics</span>
-								<span className={styles.staticFieldArrow}>⌄</span>
-							</div>
-							<p className={styles.staticFieldNote}>Category shown to match the reference layout.</p>
+
+							<select id="category" className={styles.input}>
+								<option value="">Select Category</option>
+								<option value="electronics">Electronics</option>
+								<option value="fashion">Fashion</option>
+								<option value="home">Home & Living</option>
+								<option value="beauty">Beauty & Personal Care</option>
+								<option value="sports">Sports & Fitness</option>
+								<option value="books">Books</option>
+								<option value="toys">Toys & Games</option>
+								<option value="grocery">Grocery</option>
+							</select>
+
+							<p className={styles.staticFieldNote}>
+								Choose a category for the product.
+							</p>
 						</div>
 					</div>
 
@@ -244,7 +255,7 @@ export default function ProductDialog({
 								Browse files
 							</span>
 						</button>
-						<div style={{ marginTop: 12 }}>
+						<div className={styles.imageUrlWrap}>
 							<label className={styles.fieldLabel} htmlFor="imageUrl">
 								Image URL (optional)
 							</label>
