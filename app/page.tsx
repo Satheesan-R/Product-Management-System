@@ -264,24 +264,10 @@ export default function Page() {
         </div>
 
         <div className="hidden xl:block">
-          <div className="sticky top-6 rounded-[28px] border border-white/10 bg-[#0b1020] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.32)]">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-              Quick actions
-            </p>
-            <p className="mt-3 text-lg font-semibold text-white">Use the panel for fast entry</p>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
-              Clicking Add New Product opens the form as a drawer on the right, so the
-              dashboard remains visible on the left.
-            </p>
-            <button
-              type="button"
-              onClick={openCreateDialog}
-              className="mt-6 w-full rounded-full bg-indigo-200 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-indigo-100"
-            >
-              Open Product Form
-            </button>
+          
+                       
           </div>
-        </div>
+        
       </section>
 
       {dialog.open ? (
