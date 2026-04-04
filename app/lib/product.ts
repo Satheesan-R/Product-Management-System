@@ -24,7 +24,13 @@ export const productSchema = z.object({
 		.string()
 		.trim()
 		.optional()
-		.refine((value) => !value || /^https?:\/\//i.test(value), "Image must be a valid URL"),
+		.refine(
+			(value) =>
+				!value ||
+				/^https?:\/\//i.test(value) ||     // allow URL
+				value.startsWith("data:image"),    // allow uploaded base64
+			"Image must be a valid URL or uploaded image"
+		),
 });
 
 export type ProductFormInput = z.infer<typeof productSchema>;
@@ -67,9 +73,9 @@ export function saveProductsToStorage(products: Product[]): void {
 }
 
 export function formatCurrency(amount: number): string {
-	return new Intl.NumberFormat("en-US", {
+	return new Intl.NumberFormat("en-LK", {
 		style: "currency",
-		currency: "USD",
+		currency: "LKR",
 		maximumFractionDigits: 2,
 	}).format(amount);
 }

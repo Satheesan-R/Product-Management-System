@@ -9,11 +9,10 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Product Management Dashboard",
+  title: "Product Management Dashboard It contains a list of products with the ability to create, edit, and delete products. It also includes a search functionality to filter products by name or description.",
   description: "Product CRUD dashboard built with Next.js App Router",
 };
 

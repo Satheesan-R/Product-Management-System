@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Toaster, toast } from "sonner";
 import ProductCard from "@/app/components/ProductCard";
-import ProductDialog from "@/app/components/ProductDialog";
+import ProductForm from "@/app/components/ProductForm";
 import {
   loadProductsFromStorage,
   saveProductsToStorage,
   type Product,
 } from "@/app/lib/product";
+import styles from "./page.module.css";
 
 type DialogState = {
   open: boolean;
@@ -16,24 +17,45 @@ type DialogState = {
   product: Product | null;
 };
 
+type Theme = "light" | "dark";
+
 const INITIAL_DIALOG_STATE: DialogState = {
   open: false,
   mode: "create",
   product: null,
 };
 
+const THEME_STORAGE_KEY = "product-management-theme";
+
 export default function Page() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(() =>
+    typeof window === "undefined" ? [] : loadProductsFromStorage(),
+  );
   const [search, setSearch] = useState("");
   const [dialog, setDialog] = useState<DialogState>(INITIAL_DIALOG_STATE);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
 
-  useEffect(() => {
-    setProducts(loadProductsFromStorage());
-  }, []);
+    const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme === "dark" || savedTheme === "light") {
+      return savedTheme;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
 
   useEffect(() => {
     saveProductsToStorage(products);
   }, [products]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
 
   const filteredProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -48,6 +70,11 @@ export default function Page() {
     );
   }, [products, search]);
 
+  const totalValue = useMemo(
+    () => products.reduce((sum, product) => sum + product.price, 0),
+    [products],
+  );
+
   function openCreateDialog() {
     setDialog({ open: true, mode: "create", product: null });
   }
@@ -58,6 +85,10 @@ export default function Page() {
 
   function closeDialog() {
     setDialog(INITIAL_DIALOG_STATE);
+  }
+
+  function toggleTheme() {
+    setTheme((previous) => (previous === "dark" ? "light" : "dark"));
   }
 
   function handleCreate(payload: {
@@ -122,75 +153,125 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-stone-50 via-orange-50/30 to-stone-100 px-4 py-10 sm:px-6">
-      <Toaster richColors position="top-right" />
+    <main className={styles.page}>
+      <Toaster richColors position="top-center" />
 
-      <section className="mx-auto w-full max-w-6xl">
-        <header className="mb-8 rounded-2xl border border-stone-200 bg-white/95 p-6 shadow-sm backdrop-blur sm:p-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-600">
-                Product Management
-              </p>
-              <h1 className="mt-2 text-3xl font-bold text-stone-900 sm:text-4xl">
-                Dashboard
-              </h1>
-              <p className="mt-2 max-w-xl text-sm leading-6 text-stone-600">
-                Add, edit, and manage product data with local persistence.
-              </p>
+      <section className={styles.shell}>
+        <div className={styles.stack}>
+          <header className={styles.hero}>
+            <div className={styles.heroContent}>
+              <div className={styles.heroText}>
+                <div className={styles.titleRow}>
+                  <h1 className={styles.title}>
+                    Product <span className={styles.titleAccent}>Center</span>
+                  </h1>
+                </div>
+                <p className={styles.lead}>
+                  A simple product management system where you can add, view, edit, and delete products.
+                  All data is stored locally in the browser.
+                </p>
+                <div className={styles.statsGrid}>
+                  <div className={styles.statCard}>
+                    <p className={styles.statLabel}>
+                      Total Products
+                    </p>
+                    <p className={styles.statValue}>{products.length}</p>
+                    <p className={styles.statNote}>Local inventory entries</p>
+                  </div>
+                  <div className={styles.statCard}>
+                    <p className={styles.statLabel}>
+                      Value
+                    </p>
+                    <p className={styles.statValue}>
+                      {totalValue.toLocaleString("en-LK", {
+                        style: "currency",
+                        currency: "LKR",
+                        maximumFractionDigits: 0,
+                      })}
+                    </p>
+                    <p className={styles.statNote}>Current catalog worth</p>
+                  </div>
+                  <div className={styles.statCard}>
+                    <p className={styles.statLabel}>
+                      Search
+                    </p>
+                    <p className={styles.statValue}>{filteredProducts.length}</p>
+                    <p className={styles.statNote}>Filtered results</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.actionsRight}>
+                <button
+                  type="button"
+                  onClick={openCreateDialog}
+                  className={styles.buttonPrimary}
+                >
+                  + Add New Product
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className={styles.buttonSecondary}
+                >
+                  {theme === "dark" ? "Light" : "Dark"} Mode
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <div className={styles.panel}>
+            <div className={styles.panelHeader}>
+              <div>
+                <h2 className={styles.panelTitle}>Latest Products</h2>
+                <p className={styles.panelDescription}>
+                  Curated additions to the product registry.
+                </p>
+              </div>
+              <div className={styles.searchWrap}>
+                <input
+                  id="search"
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  className={styles.searchInput}
+                  placeholder="Search by name or description"
+                />
+              </div>
             </div>
 
-            <button
-              type="button"
-              onClick={openCreateDialog}
-              className="rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-600"
-            >
-              Add Product
-            </button>
+            {filteredProducts.length === 0 ? (
+              <div className={styles.emptyState}>
+                {products.length === 0
+                  ? "No products yet. Add your first product to get started."
+                  : "No products match your search."}
+              </div>
+            ) : (
+              <div className={styles.productGrid}>
+                {filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onEdit={openEditDialog}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-
-          <div className="mt-6">
-            <label htmlFor="search" className="mb-1.5 block text-sm font-medium text-stone-700">
-              Search products
-            </label>
-            <input
-              id="search"
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              className="w-full rounded-lg border border-stone-300 bg-white px-3 py-2.5 text-sm outline-none ring-orange-500 transition placeholder:text-stone-400 focus:border-orange-400 focus:ring"
-              placeholder="Search by name or description"
-            />
-          </div>
-        </header>
-
-        {filteredProducts.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-stone-300 bg-white p-10 text-center text-sm text-stone-600">
-            {products.length === 0
-              ? "No products yet. Add your first product to get started."
-              : "No products match your search."}
-          </div>
-        ) : (
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onEdit={openEditDialog}
-                onDelete={handleDelete}
-              />
-            ))}
-          </div>
-        )}
+        </div>
       </section>
 
-      <ProductDialog
-        open={dialog.open}
-        mode={dialog.mode}
-        initialProduct={dialog.product}
-        onClose={closeDialog}
-        onSubmit={dialog.mode === "create" ? handleCreate : handleEdit}
-      />
+      {dialog.open ? (
+        <ProductForm
+          key={`${dialog.mode}-${dialog.product?.id ?? "new"}`}
+          open={dialog.open}
+          mode={dialog.mode}
+          initialProduct={dialog.product}
+          onClose={closeDialog}
+          onSubmit={dialog.mode === "create" ? handleCreate : handleEdit}
+        />
+      ) : null}
     </main>
   );
 }
