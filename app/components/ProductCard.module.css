@@ -1,0 +1,180 @@
+.card {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+:global(.dark) .card {
+  border-color: #334155;
+  background: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.imageWrap {
+  display: flex;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+:global(.dark) .imageWrap {
+  background: #1e293b;
+}
+
+.image {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 240ms ease;
+}
+
+.card:hover .image {
+  transform: scale(1.04);
+}
+
+.placeholder {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+:global(.dark) .placeholder {
+  color: #cbd5e1;
+}
+
+.content {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+:global(.dark) .title {
+  color: #f8fafc;
+}
+
+.price {
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #fff7ed;
+  padding: 6px 12px;
+  color: #c2410c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+:global(.dark) .price {
+  background: rgba(251, 146, 60, 0.16);
+  color: #fdba74;
+}
+
+.description {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+:global(.dark) .description {
+  color: #cbd5e1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.editButton,
+.deleteButton {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background-color 160ms ease, transform 160ms ease, color 160ms ease;
+}
+
+.editButton {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.editButton:hover {
+  background: #f8fafc;
+}
+
+:global(.dark) .editButton {
+  border-color: #475569;
+  background: #111827;
+  color: #f8fafc;
+}
+
+:global(.dark) .editButton:hover {
+  background: #1f2937;
+}
+
+.deleteButton {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.deleteButton:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding: 16px;
+  }
+
+  .titleRow {
+    flex-direction: column;
+  }
+
+  .price {
+    width: fit-content;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editButton,
+  .deleteButton {
+    width: 100%;
+  }
+}
