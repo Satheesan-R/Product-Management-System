@@ -161,60 +161,61 @@ export default function Page() {
           <header className={styles.hero}>
             <div className={styles.heroContent}>
               <div className={styles.heroText}>
-                <p className={styles.eyebrow}>Operational status: optimal</p>
-                <h1 className={styles.title}>
-                  Product <span className={styles.titleAccent}>Center</span>
-                </h1>
+                <div className={styles.titleRow}>
+                  <h1 className={styles.title}>
+                    Product <span className={styles.titleAccent}>Center</span>
+                  </h1>
+                </div>
                 <p className={styles.lead}>
-                  Unified product orchestration for the assessment. Real-time tracking,
-                  inventory intelligence, and local-first product management in one view.
+                  A simple product management system where you can add, view, edit, and delete products.
+                  All data is stored locally in the browser.
                 </p>
-                <div className={styles.actions}>
-                  <button
-                    type="button"
-                    onClick={openCreateDialog}
-                    className={styles.buttonPrimary}
-                  >
-                    + Add New Product
-                  </button>
-                  <button
-                    type="button"
-                    onClick={toggleTheme}
-                    className={styles.buttonSecondary}
-                  >
-                    {theme === "dark" ? "Light" : "Dark"} Mode
-                  </button>
+                <div className={styles.statsGrid}>
+                  <div className={styles.statCard}>
+                    <p className={styles.statLabel}>
+                      Total Products
+                    </p>
+                    <p className={styles.statValue}>{products.length}</p>
+                    <p className={styles.statNote}>Local inventory entries</p>
+                  </div>
+                  <div className={styles.statCard}>
+                    <p className={styles.statLabel}>
+                      Value
+                    </p>
+                    <p className={styles.statValue}>
+                      {totalValue.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        maximumFractionDigits: 0,
+                      })}
+                    </p>
+                    <p className={styles.statNote}>Current catalog worth</p>
+                  </div>
+                  <div className={styles.statCard}>
+                    <p className={styles.statLabel}>
+                      Search
+                    </p>
+                    <p className={styles.statValue}>{filteredProducts.length}</p>
+                    <p className={styles.statNote}>Filtered results</p>
+                  </div>
                 </div>
               </div>
 
-              <div className={styles.statsGrid}>
-                <div className={styles.statCard}>
-                  <p className={styles.statLabel}>
-                    Total Products
-                  </p>
-                  <p className={styles.statValue}>{products.length}</p>
-                  <p className={styles.statNote}>Local inventory entries</p>
-                </div>
-                <div className={styles.statCard}>
-                  <p className={styles.statLabel}>
-                    Value
-                  </p>
-                  <p className={styles.statValue}>
-                    {totalValue.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      maximumFractionDigits: 0,
-                    })}
-                  </p>
-                  <p className={styles.statNote}>Current catalog worth</p>
-                </div>
-                <div className={styles.statCard}>
-                  <p className={styles.statLabel}>
-                    Search
-                  </p>
-                  <p className={styles.statValue}>{filteredProducts.length}</p>
-                  <p className={styles.statNote}>Filtered results</p>
-                </div>
+              <div className={styles.actionsRight}>
+                <button
+                  type="button"
+                  onClick={openCreateDialog}
+                  className={styles.buttonPrimary}
+                >
+                  + Add New Product
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className={styles.buttonSecondary}
+                >
+                  {theme === "dark" ? "Light" : "Dark"} Mode
+                </button>
               </div>
             </div>
           </header>
