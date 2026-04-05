@@ -1,67 +1,95 @@
-# Product Management Dashboard
+# Product Management System
 
-Product Management page built for a full stack intern assessment.
+A responsive product management dashboard built with Next.js App Router and TypeScript.
+
+## Overview
+
+This application lets users manage products locally in the browser with a clean dashboard UI.
+
+Core flow:
+- Create products
+- View all products
+- Edit products
+- Delete products
+- Search/filter products
 
 ## Tech Stack
 
 - Next.js (App Router)
-- React + TypeScript
-- Tailwind CSS v4
-- Zod (form validation)
-- Sonner (toast notifications)
-- Local Storage (client-side persistence)
+- React
+- TypeScript
+- CSS Modules
+- Zod (validation)
+- Sonner (toast messages)
+- Local Storage (data persistence)
 
 ## Features
 
-- Add Product: name, price, description, optional image URL
-- View Products: clean responsive card layout
-- Edit Product: update all product details from modal dialog
-- Delete Product: remove product with confirmation prompt
-- Search/Filter: real-time filtering by name and description
-- Validation: Zod-powered inline form error messages
-- Toasts: add/update/delete feedback messages
+- Product CRUD operations
+- Form validation with inline error messages
+- Image support via file input preview and image URL
+- Category selection in the form
+- Search by product name and description
+- Responsive product grid
+- Dark mode support
+- Toast notifications for create, update, and delete actions
 
-## Setup Instructions
+## Project Structure
 
-1. Install dependencies:
+- app/page.tsx: Dashboard page and state management
+- app/page.module.css: Main page styles
+- app/components/ProductForm.tsx: Product create/edit modal form
+- app/components/ProductForm.module.css: Form styles
+- app/components/ProductCard.tsx: Product card UI
+- app/components/ProductCard.module.css: Card styles
+- app/lib/product.ts: Types, validation schema, and local storage helpers
+
+## Getting Started
+
+1. Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Run the dev server:
+2. Run development server
 
 ```bash
 npm run dev
 ```
 
-3. Open:
+3. Open the app
 
-```text
 http://localhost:3000
-```
 
-4. Build for production (optional):
+## Production
+
+Build:
 
 ```bash
 npm run build
+```
+
+Start:
+
+```bash
 npm run start
 ```
 
-## Data Handling
+## Data Persistence
 
-- Product data is persisted in `localStorage` under a single key.
-- No backend or database is required.
+- Product data is stored in browser local storage.
+- Theme preference is also stored in local storage.
+- No backend API or database is required.
 
-## Assumptions
+## Notes
 
-- Currency display is in USD.
-- Image input is URL-based (upload is not implemented).
-- Delete action uses browser confirmation for safety.
+- Currency values are currently displayed in LKR format.
+- Delete uses a browser confirmation prompt.
 
-## Potential Improvements
+## Future Enhancements
 
-- Add category/status fields and advanced filters.
-- Add dark mode toggle.
-- Replace browser confirm with custom confirmation dialog.
-- Add unit/integration tests for CRUD and validation flows.
+- Pagination for large product lists
+- Better image optimization using Next.js Image component
+- Confirmation modal instead of browser confirm
+- Unit and integration tests
