@@ -58,9 +58,12 @@ npm install
 npm run dev
 ```
 
-3. Open the app
 
+3. Open the app locally:
 http://localhost:3000
+
+Or view the deployed app:
+https://product-management-system-sage-eta.vercel.app/
 
 ## Production
 
